@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://AmitZalcher.github.io/Brain-IT/sitemap.xml

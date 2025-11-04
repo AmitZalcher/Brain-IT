@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer</title>
+
+<meta name="description" content="Project page for Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer" />
+<link rel="canonical" href="https://AmitZalcher.github.io/Brain-IT/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer" />
+<meta property="og:description" content="Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer" />
+<meta property="og:url" content="https://AmitZalcher.github.io/Brain-IT/" />
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer" />
+<meta name="twitter:description" content="Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer" />
+<meta property="og:site_name" content="Brain-IT" />
+<meta property="og:locale" content="en_US" />
+<meta name="theme-color" content="#0f172a" />
+<meta name="robots" content="index,follow" />
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="icon" href="buttons/web_logo3.png" />
+
+<style>
+  /* Typography & theme */
+  html { font-size: 112%; }
+  @media (max-width: 768px){ html { font-size: 102%; } }
+  :root{
+    --bg:#0a0b0f; --text:#e8eaed; --muted:#aab2bf;
+    --accent:#ffa600; --accent2:#c96b00;    --max: 1000px;
+    --rule: color-mix(in oklab, var(--text) 14%, transparent);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#fafafc; --text:#14171a; --muted:#5a6572;
+      --accent:#ffa600; --accent2:#c96b00;
+      --max: 1000px;  /* keep consistent for light mode */
+      --rule: color-mix(in oklab, var(--text) 12%, transparent);
+    }
+  }
+
+  *{ box-sizing:border-box }
+  html,body{ height:100% }
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+    color:var(--text); background:var(--bg); line-height:1.65;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+
+  /* Layout: continuous sections (no “cells”) */
+  .hero{
+    max-width:var(--max); margin:40px auto 0; padding:0 16px; text-align:center;
+  }
+  section{ max-width:var(--max); margin:48px auto; padding:0 16px; }
+  /* Remove card look entirely */
+  .card{ background:transparent; border:none; box-shadow:none; padding:0; }
+
+  /* Headings */
+  .title{
+    font-size: clamp(28px, 4.6vw, 44px); line-height:1.08; margin:8px 0 10px; font-weight:800;
+    background:linear-gradient(90deg, var(--text), color-mix(in oklab, var(--text) 70%, var(--accent)));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  h2.section-title{
+    font-size: clamp(20px, 3vw, 28px); margin:20px 0 10px; font-weight:800;
+    position:relative; padding-bottom:14px; text-align:center;
+  }
+  h2.section-title::after{
+    content:""; position:absolute; bottom:0; left:0; width:100%; height:1px; border-radius:1px;
+    background:var(--rule);
+  }
+  
+  h3{
+    text-align:center; margin-top:4px;
+  }
+
+  .authors{ margin:8px 0 4px; font-weight:600 }
+  .authors a{ color:inherit; text-decoration:none }
+  .authors a:hover{ text-decoration:underline }
+  .auth-note,.affil{ color:var(--muted); margin:0 }
+
+  /* CTA: use image buttons from /buttons/ */
+  .cta{
+    display:flex; gap:14px; justify-content:center; margin:16px 0 0; flex-wrap:wrap;
+  }
+  .icon-btn{
+    display:inline-flex; align-items:center; gap:10px; padding:0; border:none; background:none;
+    transition: transform .06s ease;
+  }
+  .icon-btn:hover{ transform: translateY(-1px); }
+  .icon-btn img{ height:44px; width:auto; display:block; }
+  .icon-btn span{ position:absolute; left:-9999px; } /* accessible text hidden */
+
+  /* Media */
+  figure{ margin:0 0 16px 0; }
+  .img{ width:100%; height:auto; display:block; border-radius:12px; border:none; max-width:100%; }
+  .img-well{ padding:0; background:transparent; }
+  .caption{ 
+    color:var(--muted); font-size:0.9rem; line-height:1.4; 
+    margin:8px 0 0 0; text-align:left; font-style:italic;
+  }
+
+  /* Grid helper - removed for full-width figures */
+  .grid2{ display:block; }
+  @media (max-width: 980px){ .grid2{ display:block; } }
+
+  p, ul{ margin:12px 0 0 }
+  ul{ padding-left:20px }
+  .mono, code{ font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace }
+
+  /* BibTeX restyle: boxed appearance */
+  .bibtex{
+    white-space:pre; overflow-x:auto; background:var(--bg); color:var(--text);
+    padding:16px; border:1px solid var(--rule); border-radius:8px;
+    font-family:"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size:0.9rem; line-height:1.4;
+  }
+
+  /* Subtle section dividers for flow */
+  section + section{ padding-top:32px; border-top:1px dashed var(--rule); }
+
+  /* Footer */
+  .foot{ color:var(--muted); text-align:center; margin:28px auto 40px; padding:0 16px; max-width:var(--max); }
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+  <h1 class="title">Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer</h1>
+
+  <p class="authors">
+    <a href="mailto:roman.beliy@weizmann.ac.il">Roman Beliy</a><sup>*</sup> ·
+    <a href="mailto:amit.zalcher@weizmann.ac.il">Amit Zalcher</a><sup>*</sup> ·
+    <a href="mailto:jonathan.kogman@weizmann.ac.il">Jonathan Kogman</a> ·
+    <a href="mailto:navve.wasserman@weizmann.ac.il">Navve Wasserman</a> ·
+    <a href="mailto:michal.irani@weizmann.ac.il">Michal Irani</a>
+  </p>
+  <p class="auth-note" style="color:var(--muted); font-style:italic; font-size:0.82rem; letter-spacing:0.5px; margin-top:-2px;">
+    * Denotes Equal Contribution
+  </p>
+  <p class="affil">—</p>
+
+  <style>
+    .cta {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .icon-btn {
+      display: flex;
+      flex-direction: column;     /* stack vertically */
+      align-items: center;
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .icon-btn img {
+      height: 52px;
+      width: auto;
+      margin-bottom: 0.2px;
+      display: block;
+    }
+  </style>
+  
+  <div class="cta">
+    <a class="icon-btn" href="https://arxiv.org/pdf/2510.25976" target="_blank" rel="noopener">
+      <img src="buttons/paper.png" alt="Paper">
+      <span>Paper</span>
+      Paper
+    </a>
+    <a class="icon-btn" href="https://huggingface.co/datasets/Amitz244/Brain-IT_Results" rel="noopener">
+      <img src="buttons/results.png" alt="Results">
+      <span>Results</span>
+      Results
+    </a>
+    <a class="icon-btn" href="" target="_blank" rel="noopener">
+      <img src="buttons/code.png" alt="Code">
+      <span>Code</span>
+      Code - Coming Soon
+    </a>
+  </div>
+</header>
+
+<section class="card" id="abstract">
+  <figure class="img-well">
+    <img class="img" src="figures/Teaser_final_grid.jpg" alt="Reconstruction teaser: seen images vs. Brain-IT reconstructions (40h &amp; few-shot)">
+    <p class="caption">(a) Image reconstructions
+      using the full NSD dataset (40 hours per subject). (b) Efficient Transfer-learning to new subjects with very little
+      data: Meaningful reconstructions are obtained with only 15 minutes of fMRI recordings. (Results on Subject 1)
+      </p>
+  </figure>
+  <h2 class="section-title">Abstract</h2>
+
+  <p>
+    Reconstructing images seen by people from their fMRI brain recordings provides a non-invasive window into the human brain. 
+    Despite recent progress enabled by <em>diffusion models</em>, current methods often lack faithfulness to the actual seen images. 
+    We present <strong>Brain-IT</strong>, a <em>brain-inspired</em> approach that addresses this challenge through a 
+    <strong>Brain Interaction Transformer (BIT)</strong>, allowing effective interactions between 
+    <em>clusters of functionally-similar brain-voxels</em>. 
+    These <em>functional clusters</em> are shared by all subjects, serving as building blocks for integrating information both within and across brains. 
+    All model components are shared by all clusters &amp; subjects, allowing efficient training with a limited amount of data. 
+    To guide the image reconstruction, BIT predicts two complementary <em>localized</em> patch-level image features: 
+    (i) high-level <em>semantic features</em>, which steer the diffusion model toward the correct semantic content of the image; and 
+    (ii) low-level <em>structural features</em>, which help to initialize the diffusion process with the correct coarse layout of the image. 
+    BIT’s design enables direct flow of information from brain-voxel clusters to localized image features. 
+    Through these principles, our method achieves image reconstructions from fMRI that faithfully reconstruct the seen images, 
+    and surpass current <em>state-of-the-art</em> approaches both visually and by standard objective metrics. 
+    Moreover, with only <strong>1 hour</strong> of fMRI data from a new subject, 
+    we achieve results comparable to current methods trained on full <strong>40 hour</strong> recordings.
+  </p>
+</section>
+
+<section class="card" id="overview">
+  <h2 class="section-title">Brain-IT Overview</h2>
+  <figure class="img-well">
+    <img class="img" src="figures/Overview9.png" alt="Overview of the Brain-IT pipeline including V2C mapping, BIT, semantic and low-level branches">
+    <p class="caption">Overview of Brain-IT pipeline showing the Brain Interaction Transformer (BIT) architecture with V2C mapping, semantic and low-level branches.</p>
+  </figure>
+  <p>
+    The <em><strong>Brain Interaction Transformer (BIT)</strong></em> transforms fMRI signals into <em>Semantic</em> and <em>VGG</em> features using a shared 
+    <strong>Voxel-to-Cluster (V2C)</strong> mapping. Two branches are applied: 
+    (i) the <strong>Low-Level branch</strong> reconstructs a coarse image from VGG features, used to initialize 
+    the (ii) <strong>Semantic branch</strong>, which uses semantic features to guide the diffusion model. 
+    Each voxel from every subject is mapped to a <em>functional cluster</em> shared across subjects, enabling integration within and across brains. 
+    Our <strong>Brain-IT pipeline</strong> thus reconstructs images directly from fMRI activations by first predicting meaningful image features with BIT, 
+    then refining them through a diffusion model guided by semantic conditioning and a <strong>Deep Image Prior (DIP)</strong> that ensures structural fidelity.
+  </p>
+</section>
+
+<section class="card" id="method">
+  <h2 class="section-title">Brain-Interaction Transformer (BIT)</h2>
+  <figure class="img-well">
+    <img class="img" src="figures/Architecture10.png" alt="BIT architecture: tokenizer and cross-transformer modules">
+    <p class="caption">BIT architecture showing the Brain Tokenizer and Cross-Transformer modules for processing fMRI signals into image features.</p>
+  </figure>
+  <p>
+    The BIT model predicts image features from voxel activations (fMRI). The <strong>Brain Tokenizer</strong>
+    maps the fMRI activations into Brain Tokens, which are representations of the aggregated
+    information from all the voxels of a single cluster (one token per cluster). The <strong>Cross-Transformer</strong>
+    Module integrates information from the Brain Tokens to refine their representation, and employs
+    query tokens to retrieve information from the Brain Tokens and transform it into image features,
+    with each query token predicting a single output image feature.
+  </p>
+</section>
+
+<section class="card" id="results">
+  <h2 class="section-title">Results</h2>
+
+  <h3>Qualitative Comparisons (40h)</h3>
+  <figure class="img-well">
+    <img class="img" src="figures/40h_corrected.jpg" alt="Qualitative comparisons on Subject 1 with 40-hour training">
+    <p class="caption">Qualitative comparisons on Subject 1 with 40-hour training data. Brain-IT is compared to 3 leading methods, yielding reconstructions that better preserve both semantic content and low-level visual properties.</p>
+  </figure>
+
+  <h3>Qualitative Comparisons - limited amount of subject-specific data (1 hour)</h3>
+  <figure class="img-well">
+    <img class="img" src="figures/1h_final.jpg" alt="Reconstructions with 1 hour of subject-specific data compared to prior work">
+    <p class="caption">Reconstructions with 1 hour of subject-specific data. Brain-IT is compared against MindEye2 & MindTuner, demonstrating greater fidelity to the seen images.</p>
+  </figure>
+
+  <h3>Quantitative Metrics</h3>
+  <figure class="img-well">
+    <img class="img" src="figures/quantitative.png" alt="Table of low- and high-level metrics across methods (40h and 1h)">
+    <p class="caption">Low- and high-level metrics comparing Brain-IT with other reconstruction methods. Results averaged across Subjects 1,2,5,7 from NSD. Brain-IT outperforms all baselines in 7 of 8 metrics.</p>
+  </figure>
+  <p>
+    Brain-IT demonstrates strong semantic fidelity and structural accuracy across multiple evaluation metrics.
+    Importantly, with just 1 hour of data, Brain-IT is comparable to prior methods trained on the full 40 hours.
+  </p>
+</section>
+
+<section class="card" id="bibtex">
+  <h2 class="section-title">BibTeX</h2>
+  <div class="bibtex">
+@misc{beliy2025brainitimagereconstructionfmri,
+  title={Brain-IT: Image Reconstruction from fMRI via Brain-Interaction Transformer}, 
+  author={Roman Beliy and Amit Zalcher and Jonathan Kogman and Navve Wasserman and Michal Irani},
+  year={2025},
+  eprint={2510.25976},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2510.25976}
+}
+  </div>
+</section>
+
+<section class="foot">
+  © 2026 Brain-IT Authors.
+</section>
+
+<!--
+  Style-only changes: removed “card” look (no cells), continuous layout, and image-based buttons from /buttons/.
+-->
+
+</body>
+</html>
